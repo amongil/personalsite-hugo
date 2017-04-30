@@ -1,0 +1,66 @@
+baseurl             = "/"
+languageCode        = "en-us"
+title               = "AlvaroMongil.me"
+theme               = "introduction"
+enforce_ssl         = "your-url.com"
+builddrafts         = false
+canonifyurls        = true
+contentdir          = "content"
+layoutdir           = "layouts"
+publishdir          = "public"
+# disqusshortname   = "xxx" # Enable Disqus for comments
+# googleAnalytics   = "xxx"
+
+[permalinks]
+fixed = ":title/"
+blog  = "blog/:slug/"
+
+[params]
+author        = "Alvaro Mongil" # Full name shows on blog post pages
+firstname     = "Alvaro" # First name shows in introduction on main page
+tagline       = "I'm a Cloud Systems Engineer." # Appears after the introduction
+introheight   = "large" # Input either 'medium' or 'large' or 'fullheight'
+avatar        = "img/myphoto.jpg" # Path to image in static folder eg. img/avatar.png 
+email         = "hello@alvaromongil.me" # Shows in contact section, or leave blank to omit
+localtime     = false # Show your current local time in contact section
+timezone      = "Europe/Berlin" # Your timezone as in the TZ* column of this list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+dateform      = "May 29 2017 13:19:00 EST"
+dateformfull  = "Mon May 29 2017 13:19:00 EST"
+cachebuster   = true # Add the current unix timestamp in query string for cache busting css assets
+description   = "Alvaro Mongil personal site"
+faviconfile   = "img/favicon.png"
+highlightjs   = true # Syntax highlighting
+lang          = "en"
+footertext    = "© 2017 Alvaro Mongil. Designed by Vicky Lai." # Text to show in footer (overrides default text)
+
+showblog        = false # Show Blog section on home page
+showallposts    = false # Set 'true' to list all posts on home page, or set 'false' to link to separate blog list page
+showlatest      = false # Show latest blog post summary
+sharebuttons    = false # On post pages, show share this social buttons
+
+showprojects    = false # Show Projects section on home page
+
+# This is your projects section. Three images of the same dimensions will look the nicest. If images are omitted, text links will be shown.
+project1link    = "#"
+project1img     = "img/project1.jpg"
+project1title   = "Project 1"
+
+project2link    = "#"
+project2img     = "img/project2.jpg"
+project2title   = "Project 2"
+
+project3link    = "#"
+project3img     = "img/project3.jpg"
+project3title   = "Project 3"
+
+
+# Social icons appear in introduction and contact section. Add as many more as you like.
+# Find icon names here: http://fontawesome.io/cheatsheet/
+
+[[params.social]]
+url = "https://github.com/amongil"
+icon = "github"
+
+[[params.social]]
+url = "https://linkedin.com/in/alvaro-mongil"
+icon = "linkedin"
