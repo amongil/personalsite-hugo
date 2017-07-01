@@ -9,4 +9,4 @@ I studied [Telematics](https://en.wikipedia.org/wiki/Telematics) at the Universi
 
 In 2015 I moved to Ireland, where I had the pleasure of getting to know a unique, beautiful culture and country. At the same time, I learned tons about Data Storage working among the best at that.
 
-I am currently living in Munich, working as a Cloud Systems Engineer using Python, AWS, various automation tools and Agile Methodologies to build Distributed Applications in the Cloud and do that thing called *DevOps*.
+I am currently living in Munich, working as a Cloud Systems Engineer. Here I design and implement resilient, highly available distributed systems in AWS, serverless platforms, and also code orchestrating scripts and tools in Python and Go.
