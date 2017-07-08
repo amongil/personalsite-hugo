@@ -4,4 +4,4 @@ title = "contact"
 
 +++
 
-I am actively looking for *pro bono* causes to support. Best way to reach me is either through LinkedIn or direct email. Talk to you soon!
+Best way to reach me is either through LinkedIn or direct email. Talk to you soon!

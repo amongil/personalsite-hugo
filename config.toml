@@ -1,6 +1,6 @@
 baseurl             = "/"
 languageCode        = "en-us"
-title               = "AlvaroMongil.com"
+title               = "alvaromongil.com"
 theme               = "introduction"
 enforce_ssl         = "alvaromongil.com"
 builddrafts         = false
@@ -28,7 +28,7 @@ dateform      = "May 29 2017 13:19:00 EST"
 dateformfull  = "Mon May 29 2017 13:19:00 EST"
 cachebuster   = true # Add the current unix timestamp in query string for cache busting css assets
 description   = "Alvaro Mongil personal site"
-faviconfile   = "img/favicon.png"
+faviconfile   = "img/computer_win.ico"
 highlightjs   = true # Syntax highlighting
 lang          = "en"
 footertext    = "© 2017 Alvaro Mongil. Designed by Vicky Lai." # Text to show in footer (overrides default text)
