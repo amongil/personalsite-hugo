@@ -3,10 +3,8 @@
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
 # Build the project.
-hugo -t hermit # if using a theme, replace by `hugo -t <yourtheme>`
+hugo -t hermit -d docs # if using a theme, replace by `hugo -t <yourtheme>`
 
-# Go To Public folder
-cd public
 # Add changes to git.
 git add -A
 
@@ -20,5 +18,3 @@ git commit -m "$msg"
 # Push source and build repos.
 git push origin master
 
-# Come Back
-cd ..
