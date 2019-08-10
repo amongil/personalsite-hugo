@@ -1,66 +1,77 @@
-baseurl             = "/"
-languageCode        = "en-us"
-title               = "alvaromongil.com"
-theme               = "introduction"
-enforce_ssl         = "alvaromongil.com"
-builddrafts         = false
-canonifyurls        = true
-contentdir          = "content"
-layoutdir           = "layouts"
-publishdir          = "public"
-# disqusshortname   = "xxx" # Enable Disqus for comments
-# googleAnalytics   = "xxx"
+baseURL = "https://alvaromongil.com"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Alvaro Mongil"
+theme = "hermit"
+# enableGitInfo = true
+pygmentsCodefences  = true
+pygmentsUseClasses  = true
+# hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
+rssLimit = 10  # Maximum number of items in the RSS feed.
+copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
+enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
+# googleAnalytics = "UA-123-45"
+# disqusShortname = "yourdiscussshortname"
 
-[permalinks]
-fixed = ":title/"
-blog  = "blog/:slug/"
+[author]
+  name = "Alvaro Mongil"
+
+[blackfriday]
+  # hrefTargetBlank = true
+  # noreferrerLinks = true
+  # nofollowLinks = true
+
+[taxonomies]
+  tag = "tags"
+  # Categories are disabled by default.
 
 [params]
-author        = "Alvaro Mongil" # Full name shows on blog post pages
-firstname     = "Alvaro" # First name shows in introduction on main page
-tagline       = "I'm a Solutions Architect." # Appears after the introduction
-introheight   = "large" # Input either 'medium' or 'large' or 'fullheight'
-avatar        = "img/myphoto.jpg" # Path to image in static folder eg. img/avatar.png 
-email         = "hello@alvaromongil.com" # Shows in contact section, or leave blank to omit
-localtime     = false # Show your current local time in contact section
-timezone      = "Europe/Berlin" # Your timezone as in the TZ* column of this list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-dateform      = "May 29 2017 13:19:00 EST"
-dateformfull  = "Mon May 29 2017 13:19:00 EST"
-cachebuster   = true # Add the current unix timestamp in query string for cache busting css assets
-description   = "Alvaro Mongil personal site"
-faviconfile   = "img/computer_win.ico"
-highlightjs   = true # Syntax highlighting
-lang          = "en"
-footertext    = "© 2019 Alvaro Mongil. Designed by Vicky Lai." # Text to show in footer (overrides default text)
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
 
-showblog        = false # Show Blog section on home page
-showallposts    = false # Set 'true' to list all posts on home page, or set 'false' to link to separate blog list page
-showlatest      = false # Show latest blog post summary
-sharebuttons    = false # On post pages, show share this social buttons
+  # Metadata mostly used in document's head
+  # description = ""
+  # images = [""]
+  themeColor = "#494f5c"
 
-showprojects    = false # Show Projects section on home page
+  homeSubtitle = "Cloud Solutions Architect"
+  footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+  # bgImg = ""  # Homepage background-image URL
 
-# This is your projects section. Three images of the same dimensions will look the nicest. If images are omitted, text links will be shown.
-project1link    = "#"
-project1img     = "img/project1.jpg"
-project1title   = "Project 1"
+  # Prefix of link to the git commit detail page. GitInfo must be enabled.
+  # gitUrl = "https://github.com/username/repository/commit/"
 
-project2link    = "#"
-project2img     = "img/project2.jpg"
-project2title   = "Project 2"
+  # Toggling this option needs to rebuild SCSS, requires Hugo extended version
+  justifyContent = false  # Set "text-align: justify" to `.content`.
 
-project3link    = "#"
-project3img     = "img/project3.jpg"
-project3title   = "Project 3"
+  relatedPosts = false  # Add a related content section to all single posts page
 
+  # Add custom css
+  # customCSS = ["css/foo.css", "css/bar.css"]
 
-# Social icons appear in introduction and contact section. Add as many more as you like.
-# Find icon names here: http://fontawesome.io/cheatsheet/
+  # Social Icons
+  # Check https://github.com/Track3/hermit#social-icons for more info.
+  [[params.social]]
+    name = "email"
+    url = "mailto:hello@alvaromongil.com"
 
-[[params.social]]
-url = "https://github.com/amongil"
-icon = "github"
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/amongil"
 
-[[params.social]]
-url = "https://linkedin.com/in/alvaro-mongil"
-icon = "linkedin"
+  [[params.social]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/alvaro-mongil"
+[menu]
+
+  [[menu.main]]
+    name = "Posts"
+    url = "posts/"
+    weight = 10
+
+  [[menu.main]]
+    name = "About"
+    url = "about/"
+    weight = 20
