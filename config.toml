@@ -18,7 +18,7 @@ blog  = "blog/:slug/"
 [params]
 author        = "Alvaro Mongil" # Full name shows on blog post pages
 firstname     = "Alvaro" # First name shows in introduction on main page
-tagline       = "I'm a Cloud Systems Engineer." # Appears after the introduction
+tagline       = "I'm a Solutions Architect." # Appears after the introduction
 introheight   = "large" # Input either 'medium' or 'large' or 'fullheight'
 avatar        = "img/myphoto.jpg" # Path to image in static folder eg. img/avatar.png 
 email         = "hello@alvaromongil.com" # Shows in contact section, or leave blank to omit
@@ -31,7 +31,7 @@ description   = "Alvaro Mongil personal site"
 faviconfile   = "img/computer_win.ico"
 highlightjs   = true # Syntax highlighting
 lang          = "en"
-footertext    = "© 2018 Alvaro Mongil. Designed by Vicky Lai." # Text to show in footer (overrides default text)
+footertext    = "© 2019 Alvaro Mongil. Designed by Vicky Lai." # Text to show in footer (overrides default text)
 
 showblog        = false # Show Blog section on home page
 showallposts    = false # Set 'true' to list all posts on home page, or set 'false' to link to separate blog list page
