@@ -7,26 +7,53 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 29 Sep 2018 11:36:33 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 11 Aug 2019 11:33:59 +0200</lastBuildDate>
     
 	<atom:link href="https://alvaromongil.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Demo</title>
-      <link>https://alvaromongil.com/tags/demo/</link>
-      <pubDate>Sat, 29 Sep 2018 11:36:33 +0800</pubDate>
+      <title>decentralized</title>
+      <link>https://alvaromongil.com/tags/decentralized/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
       
-      <guid>https://alvaromongil.com/tags/demo/</guid>
+      <guid>https://alvaromongil.com/tags/decentralized/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Typography</title>
-      <link>https://alvaromongil.com/tags/typography/</link>
-      <pubDate>Sat, 29 Sep 2018 11:36:33 +0800</pubDate>
+      <title>ethereum</title>
+      <link>https://alvaromongil.com/tags/ethereum/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
       
-      <guid>https://alvaromongil.com/tags/typography/</guid>
+      <guid>https://alvaromongil.com/tags/ethereum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberrypi</title>
+      <link>https://alvaromongil.com/tags/raspberrypi/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
+      
+      <guid>https://alvaromongil.com/tags/raspberrypi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>storage</title>
+      <link>https://alvaromongil.com/tags/storage/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
+      
+      <guid>https://alvaromongil.com/tags/storage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>storj</title>
+      <link>https://alvaromongil.com/tags/storj/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
+      
+      <guid>https://alvaromongil.com/tags/storj/</guid>
       <description></description>
     </item>
     

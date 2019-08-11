@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Alvaro Mongil</title>
-    <link>https://alvaromongil.com/</link>
-    <description>Recent content on Alvaro Mongil</description>
+    <title>storage on Alvaro Mongil</title>
+    <link>https://alvaromongil.com/tags/storage/</link>
+    <description>Recent content in storage on Alvaro Mongil</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sun, 11 Aug 2019 11:33:59 +0200</lastBuildDate>
     
-	<atom:link href="https://alvaromongil.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://alvaromongil.com/tags/storage/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,16 +20,6 @@
       <guid>https://alvaromongil.com/posts/im-joining-the-storj-network/</guid>
       <description>Lately, I have not been giving much attention to my Raspberry Pi 3 B+ and I remembered that a few months back I had received an invitation to the Storj network. Luckily, I have a spare 1TB external HDD that I can now hopefully put to good use.
  Storj is an S3-compatible platform and suite of decentralized applications that allows you to store data in a secure and decentralized manner.</description>
-    </item>
-    
-    <item>
-      <title>about</title>
-      <link>https://alvaromongil.com/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://alvaromongil.com/about/</guid>
-      <description>Hi, I&amp;rsquo;m Alvaro, thanks for visiting my personal site!
-I am currently living in Madrid, working as a Solutions Architect for BBVA Next Technologies. My job involves designing and implementing scalable, highly available distributed systems infrastructure in AWS, automating infrastructure self-service through CI/CD pipelines, and also programming orchestrating scripts and tools in Python and Go.</description>
     </item>
     
   </channel>
