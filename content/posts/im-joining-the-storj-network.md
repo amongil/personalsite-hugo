@@ -219,7 +219,8 @@ As we can see from the logs, the node is attempting to join the network. But the
 Preparing your Raspberry Pi and your HDD to work with the Storj network is a pretty straight-forward job. Storj is gaining some traction and now is offering an Enterprise version of the network called [Tardigrade](https://tardigrade.io/). I imagine as Storj takes off more and more powerful nodes will join the network and it might even be the case now that my poor Raspberry Pi is no competition to most of the nodes. Anyways, the process was fun and my hopes are still up. Hope you enjoyed following the process alongside me. Until next time!
 
 Update: it has successfully joined the network and I can see movement on the dashboard. Now time to tweak settings :)
-````
+
+```
 Storage Node Dashboard ( Node Version: v0.16.1 )
 
 ======================
