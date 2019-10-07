@@ -12,3 +12,5 @@ tags:
 ![img](https://cdkworkshop.com/images/new-cdk-logo.png)
 
 Amazon Web Services has recently released the Cloud Development Kit. It seemed like the idea was to expose AWS resources through a TypeScript API so that you could share your CloudFormation templates through NPM libraries, making it easier to share your work and to deploy your infrastructure. Within a few examples, I was hooked. You can follow part of my journey in the codelab workshop I created at [https://aws-cdk-workshop.alvaromongil.com/#0](https://aws-cdk-workshop.alvaromongil.com/#0).
+
+---
