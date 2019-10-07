@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Alvaro Mongil</title>
-    <link>https://alvaromongil.com/posts/</link>
-    <description>Recent content in Posts on Alvaro Mongil</description>
+    <title>aws on Alvaro Mongil</title>
+    <link>https://alvaromongil.com/tags/aws/</link>
+    <description>Recent content in aws on Alvaro Mongil</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Mon, 07 Oct 2019 10:32:00 +0200</lastBuildDate>
     
-	<atom:link href="https://alvaromongil.com/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://alvaromongil.com/tags/aws/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,16 +19,6 @@
       
       <guid>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</guid>
       <description>Amazon Web Services has recently released the Cloud Development Kit. It seemed like the idea was to expose AWS resources through a TypeScript API so that you could share your CloudFormation templates through NPM libraries, making it easier to share your work and to deploy your infrastructure. Within a few examples, I was hooked. You can follow part of my journey in the codelab workshop I created at https://aws-cdk-workshop.alvaromongil.com/#0.</description>
-    </item>
-    
-    <item>
-      <title>I&#39;m joining the Storj network</title>
-      <link>https://alvaromongil.com/posts/im-joining-the-storj-network/</link>
-      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
-      
-      <guid>https://alvaromongil.com/posts/im-joining-the-storj-network/</guid>
-      <description>Lately, I have not been giving much attention to my Raspberry Pi 3 B+ and I remembered that a few months back I had received an invitation to the Storj network. Luckily, I have a spare 1TB external HDD that I can now hopefully put to good use.
- Storj is an S3-compatible platform and suite of decentralized applications that allows you to store data in a secure and decentralized manner.</description>
     </item>
     
   </channel>

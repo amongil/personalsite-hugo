@@ -4,8 +4,52 @@
   
   <url>
     <loc>https://alvaromongil.com/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/aws/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/cdk/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/iac/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/posts/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/typescript/</loc>
+    <lastmod>2019-10-07T10:32:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/decentralized/</loc>
     <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/ethereum/</loc>
+    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
   </url>
   
   <url>
@@ -14,45 +58,18 @@
   </url>
   
   <url>
-    <loc>https://alvaromongil.com/posts/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://alvaromongil.com/tags/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://alvaromongil.com/tags/decentralized/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://alvaromongil.com/tags/ethereum/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://alvaromongil.com/tags/raspberrypi/</loc>
     <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://alvaromongil.com/tags/storage/</loc>
     <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://alvaromongil.com/tags/storj/</loc>
     <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
