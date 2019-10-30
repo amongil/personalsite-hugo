@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 07 Oct 2019 10:32:00 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 29 Oct 2019 10:32:00 +0200</lastBuildDate>
     
 	<atom:link href="https://alvaromongil.com/tags/iac/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Infrastructure development with the AWS CDK</title>
       <link>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</link>
-      <pubDate>Mon, 07 Oct 2019 10:32:00 +0200</pubDate>
+      <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
       
       <guid>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</guid>
       <description>Amazon Web Services has recently released the Cloud Development Kit. It seemed like the idea was to expose AWS resources through a TypeScript API so that you could share your CloudFormation templates through NPM libraries, making it easier to share your work and to deploy your infrastructure. Within a few examples, I was hooked. You can follow part of my journey in the codelab workshop I created at https://aws-cdk-workshop.alvaromongil.com/#0.</description>
