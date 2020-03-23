@@ -4,7 +4,37 @@
   
   <url>
     <loc>https://alvaromongil.com/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/azure/</loc>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/posts/developing-a-github-action-in-go/</loc>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/github/</loc>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/go/</loc>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/posts/</loc>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://alvaromongil.com/tags/</loc>
+    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
   </url>
   
   <url>
@@ -24,16 +54,6 @@
   
   <url>
     <loc>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://alvaromongil.com/posts/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://alvaromongil.com/tags/</loc>
     <lastmod>2019-10-29T10:32:00+02:00</lastmod>
   </url>
   

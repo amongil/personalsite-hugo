@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 29 Oct 2019 10:32:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 23 Mar 2020 16:43:10 +0100</lastBuildDate>
     
 	<atom:link href="https://alvaromongil.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Developing a Github Action in Go</title>
+      <link>https://alvaromongil.com/posts/developing-a-github-action-in-go/</link>
+      <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
+      
+      <guid>https://alvaromongil.com/posts/developing-a-github-action-in-go/</guid>
+      <description>I&amp;rsquo;ve taken part in this month&amp;rsquo;s GitHub Hackathon. This time it consisted of creating a GitHub Action and publishing it on the Marketplace.
+Browsing through the marketplace, I did not see any connector to Azure Queues or Azure Event Hub, so I decided to write an action in Go that would send the last job status of the GitHub Workflow (failure, success, etc&amp;hellip;), along with some Git metadata, to an Azure Queue, for further processing through any consumer application that would read from that Azure Queue.</description>
+    </item>
     
     <item>
       <title>Infrastructure development with the AWS CDK</title>
