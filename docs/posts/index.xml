@@ -25,7 +25,7 @@ That&amp;rsquo;s the reason I started to dig into the Terraform code a create a 
 
 <p>Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.</p>
 
-<p>That&rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released <a href="https://github.com/amongil/terralib">working alpha of my Terralib project</a>.</p>
+<p>That&rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a <a href="https://github.com/amongil/terralib">working alpha of my Terralib project</a>.</p>
 
 <p>Example of usage:</p>
 <div class="highlight"><pre class="chroma"><code class="language-Go" data-lang="Go"><span class="kn">package</span> <span class="nx">main</span>
