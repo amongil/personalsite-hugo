@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 23 Mar 2020 16:43:10 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
     
 	<atom:link href="https://alvaromongil.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>go</title>
+      <link>https://alvaromongil.com/tags/go/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      
+      <guid>https://alvaromongil.com/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>library</title>
+      <link>https://alvaromongil.com/tags/library/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      
+      <guid>https://alvaromongil.com/tags/library/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terraform</title>
+      <link>https://alvaromongil.com/tags/terraform/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      
+      <guid>https://alvaromongil.com/tags/terraform/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>azure</title>
@@ -27,15 +54,6 @@
       <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
       
       <guid>https://alvaromongil.com/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://alvaromongil.com/tags/go/</link>
-      <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
-      
-      <guid>https://alvaromongil.com/tags/go/</guid>
       <description></description>
     </item>
     
@@ -81,24 +99,6 @@
       <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
       
       <guid>https://alvaromongil.com/tags/decentralized/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ethereum</title>
-      <link>https://alvaromongil.com/tags/ethereum/</link>
-      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
-      
-      <guid>https://alvaromongil.com/tags/ethereum/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>raspberrypi</title>
-      <link>https://alvaromongil.com/tags/raspberrypi/</link>
-      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
-      
-      <guid>https://alvaromongil.com/tags/raspberrypi/</guid>
       <description></description>
     </item>
     

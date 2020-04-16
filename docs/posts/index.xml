@@ -6,8 +6,101 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 23 Mar 2020 16:43:10 +0100</lastBuildDate>
+		<lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
 		<atom:link href="https://alvaromongil.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Terralib: Run Terraform commands in your Go code</title>
+			<link>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</link>
+			<pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+			
+			<guid>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</guid>
+			<description>When developing automated infrastructure tests, I&amp;rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).
+Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.
+That&amp;rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs.</description>
+			<content type="html"><![CDATA[<p><img src="https://avatars0.githubusercontent.com/u/28900900?s=460&amp;v=4" alt="Terraform logo" />
+<img src="https://blog.golang.org/gopher/header.jpg" alt="Gopher" /></p>
+
+<p>When developing automated infrastructure tests, I&rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).</p>
+
+<p>Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.</p>
+
+<p>That&rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released <a href="https://github.com/amongil/terralib">working alpha of my Terralib project</a>.</p>
+
+<p>Example of usage:</p>
+<div class="highlight"><pre class="chroma"><code class="language-Go" data-lang="Go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+
+	<span class="nx">terralib</span> <span class="s">&#34;github.com/amongil/terralib&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Init terralib. ConfigPath is the path on where the Terraform config files are
+</span><span class="c1"></span>	<span class="nx">tf</span> <span class="o">:=</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">Terralib</span><span class="p">{</span>
+		<span class="nx">ConfigPath</span><span class="p">:</span> <span class="s">&#34;terraform-files&#34;</span><span class="p">,</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// Terraform init
+</span><span class="c1"></span>	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform init...&#34;</span><span class="p">)</span>
+	<span class="nx">options</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
+	<span class="nx">initOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Init</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">defer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">initOutput</span><span class="p">.</span><span class="nx">Raw</span><span class="p">)</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform init: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="c1">// We can act on specific errors and maybe remediate
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">==</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">ErrProviderNotFound</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Full error: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">terralib</span><span class="p">.</span><span class="nx">InitError</span><span class="p">).</span><span class="nx">Reason</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="k">return</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// Terraform plan
+</span><span class="c1"></span>	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform plan...&#34;</span><span class="p">)</span>
+	<span class="nx">planOptions</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+		<span class="s">&#34;-out=planfile&#34;</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Plan</span><span class="p">(</span><span class="nx">planOptions</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform plan: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">==</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">ErrInvalidResourceType</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Full error: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">terralib</span><span class="p">.</span><span class="nx">PlanError</span><span class="p">).</span><span class="nx">Reason</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="k">return</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// Issue Terraform Show command on the plan file and save info on memory
+</span><span class="c1"></span>	<span class="nx">dir</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getwd</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">showOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="s">&#34;/terraform-files/planfile&#34;</span><span class="p">)</span>
+	<span class="c1">// Having our planned resource changes in a map allows us to make decisions over them
+</span><span class="c1"></span>	<span class="c1">// maybe even send them to event hubs for posterior analysis?
+</span><span class="c1"></span>	<span class="nx">plannedValues</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">showOutput</span><span class="p">.</span><span class="nx">PlannedValues</span><span class="p">).(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span>
+	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">plannedValues</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s: %v\n&#34;</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">.(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})[</span><span class="s">&#34;resources&#34;</span><span class="p">])</span>
+	<span class="p">}</span>
+
+    <span class="c1">// Terraform apply
+</span><span class="c1"></span>	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform apply...&#34;</span><span class="p">)</span>
+	<span class="nx">applyOptions</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+		<span class="s">&#34;-auto-approve&#34;</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="nx">applyOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Apply</span><span class="p">(</span><span class="nx">applyOptions</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform apply: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">applyOutput</span><span class="p">)</span>
+
+<span class="p">}</span></code></pre></div>
+<p>See how a complete Terraform workflow can be executed within your Go program. It needs more tests, error handling and deduplication of code, but it already serves a purpose. Hope you enjoy the idea and you start contributing to it. Don&rsquo;t hesitate to get in touch via GitHub.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Developing a Github Action in Go</title>
