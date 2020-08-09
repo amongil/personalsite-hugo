@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Alvaro Mongil</title>
+    <title>Álvaro Mongil</title>
     <link>https://alvaromongil.com/</link>
-    <description>Recent content on Alvaro Mongil</description>
+    <description>Recent content on Álvaro Mongil</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
@@ -58,8 +58,8 @@ Browsing through the marketplace, I did not see any connector to Azure Queues or
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://alvaromongil.com/about/</guid>
-      <description>Hi, I&amp;rsquo;m Alvaro, thanks for visiting my personal site!
-I am currently living in Madrid, working as a Cloud Architect for BBVA Next Technologies. My job involves designing and implementing scalable, highly available distributed systems infrastructure in AWS Azure, automating infrastructure self-service through CI/CD pipelines, and also programming orchestrating scripts and tools in Python and Go.</description>
+      <description>Hi, I&amp;rsquo;m Álvaro, thanks for visiting my personal site!
+I&amp;rsquo;m a Systems Engineering, Open Source and Cloud enthusiast, and currently working at ING&amp;rsquo;s Site Reliability Engineering team.</description>
     </item>
     
   </channel>
