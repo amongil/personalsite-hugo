@@ -2,7 +2,7 @@ baseURL = "https://alvaromongil.com"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Álvaro Mongil"
-theme = "hermit"
+theme = "hermit-v2"
 # enableGitInfo = true
 pygmentsCodefences  = true
 pygmentsUseClasses  = true
@@ -36,7 +36,7 @@ googleAnalytics = "UA-146165257-1"
   # images = [""]
   themeColor = "#494f5c"
 
-  homeSubtitle = "Systems Engineer"
+  homeSubtitle = "Software and Systems Engineer"
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # bgImg = ""  # Homepage background-image URL
 

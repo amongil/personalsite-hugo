@@ -1,37 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>go on Álvaro Mongil</title>
+    <title>Go on Álvaro Mongil</title>
     <link>https://alvaromongil.com/tags/go/</link>
-    <description>Recent content in go on Álvaro Mongil</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Go on Álvaro Mongil</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
-    
-	<atom:link href="https://alvaromongil.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <atom:link href="https://alvaromongil.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Terralib: Run Terraform commands in your Go code</title>
       <link>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</link>
       <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</guid>
-      <description>When developing automated infrastructure tests, I&amp;rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).
-Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.
-That&amp;rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs.</description>
+      <description>&lt;p&gt;&lt;img src=&#34;https://avatars0.githubusercontent.com/u/28900900?s=460&amp;amp;v=4&#34; alt=&#34;Terraform logo&#34;&gt;&#xA;&lt;img src=&#34;https://blog.golang.org/gopher/header.jpg&#34; alt=&#34;Gopher&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;When developing automated infrastructure tests, I&amp;rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).&lt;/p&gt;&#xA;&lt;p&gt;Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a &lt;a href=&#34;https://github.com/amongil/terralib&#34;&gt;working alpha of my Terralib project&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Developing a Github Action in Go</title>
       <link>https://alvaromongil.com/posts/developing-a-github-action-in-go/</link>
       <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
-      
       <guid>https://alvaromongil.com/posts/developing-a-github-action-in-go/</guid>
-      <description>I&amp;rsquo;ve taken part in this month&amp;rsquo;s GitHub Hackathon. This time it consisted of creating a GitHub Action and publishing it on the Marketplace.
-Browsing through the marketplace, I did not see any connector to Azure Queues or Azure Event Hub, so I decided to write an action in Go that would send the last job status of the GitHub Workflow (failure, success, etc&amp;hellip;), along with some Git metadata, to an Azure Queue, for further processing through any consumer application that would read from that Azure Queue.</description>
+      <description>&lt;p&gt;&lt;img src=&#34;https://avatars0.githubusercontent.com/u/44036562?s=200&amp;amp;v=4&#34; alt=&#34;GitHub actions logo&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve taken part in this month&amp;rsquo;s GitHub Hackathon. This time it consisted of creating a &lt;a href=&#34;https://github.com/features/actions&#34;&gt;GitHub Action&lt;/a&gt; and publishing it on the Marketplace.&lt;/p&gt;&#xA;&lt;p&gt;Browsing through the marketplace, I did not see any connector to Azure Queues or Azure Event Hub, so I decided to write an action in Go that would send the last job status of the GitHub Workflow (failure, success, etc&amp;hellip;), along with some Git metadata, to an Azure Queue, for further processing through any consumer application that would read from that Azure Queue.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

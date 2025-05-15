@@ -1,106 +1,83 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Álvaro Mongil</title>
     <link>https://alvaromongil.com/tags/</link>
     <description>Recent content in Tags on Álvaro Mongil</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
-    
-	<atom:link href="https://alvaromongil.com/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <atom:link href="https://alvaromongil.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://alvaromongil.com/tags/go/</link>
       <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/go/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>library</title>
+      <title>Library</title>
       <link>https://alvaromongil.com/tags/library/</link>
       <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/library/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>terraform</title>
+      <title>Terraform</title>
       <link>https://alvaromongil.com/tags/terraform/</link>
       <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/terraform/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>azure</title>
+      <title>Azure</title>
       <link>https://alvaromongil.com/tags/azure/</link>
       <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
-      
       <guid>https://alvaromongil.com/tags/azure/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>github</title>
+      <title>Github</title>
       <link>https://alvaromongil.com/tags/github/</link>
       <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
-      
       <guid>https://alvaromongil.com/tags/github/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>aws</title>
+      <title>Aws</title>
       <link>https://alvaromongil.com/tags/aws/</link>
       <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/aws/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cdk</title>
+      <title>Cdk</title>
       <link>https://alvaromongil.com/tags/cdk/</link>
       <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/cdk/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>iac</title>
+      <title>Iac</title>
       <link>https://alvaromongil.com/tags/iac/</link>
       <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/iac/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>typescript</title>
+      <title>Typescript</title>
       <link>https://alvaromongil.com/tags/typescript/</link>
       <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/typescript/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>decentralized</title>
+      <title>Decentralized</title>
       <link>https://alvaromongil.com/tags/decentralized/</link>
       <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
-      
       <guid>https://alvaromongil.com/tags/decentralized/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

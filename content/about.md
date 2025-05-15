@@ -1,8 +1,8 @@
 +++
-date = "2018-09-31T14:07:00+02:00"
+date = "2025-05-15"
 title = "about"
 
 +++
 Hi, I'm Álvaro, thanks for visiting my personal site! 
 
-I'm a Systems Engineering, Open Source and Cloud enthusiast, and currently working at ING's Site Reliability Engineering team.
+I'm a Software and Systems Engineering, Cloud and SRE enthusiast, and I am currently working at Datadog as a Software Engineer in the API Platform team.

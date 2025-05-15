@@ -1,358 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Posts on Álvaro Mongil</title>
-		<link>https://alvaromongil.com/posts/</link>
-		<description>Recent content in Posts on Álvaro Mongil</description>
-		<generator>Hugo -- gohugo.io</generator>
-		<language>en-us</language>
-		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
-		<atom:link href="https://alvaromongil.com/posts/index.xml" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Terralib: Run Terraform commands in your Go code</title>
-			<link>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</link>
-			<pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
-			
-			<guid>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</guid>
-			<description>When developing automated infrastructure tests, I&amp;rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).
-Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.
-That&amp;rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs.</description>
-			<content type="html"><![CDATA[<p><img src="https://avatars0.githubusercontent.com/u/28900900?s=460&amp;v=4" alt="Terraform logo" />
-<img src="https://blog.golang.org/gopher/header.jpg" alt="Gopher" /></p>
-
-<p>When developing automated infrastructure tests, I&rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).</p>
-
-<p>Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.</p>
-
-<p>That&rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a <a href="https://github.com/amongil/terralib">working alpha of my Terralib project</a>.</p>
-
-<p>Example of usage:</p>
-<div class="highlight"><pre class="chroma"><code class="language-Go" data-lang="Go"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-	<span class="s">&#34;fmt&#34;</span>
-	<span class="s">&#34;log&#34;</span>
-	<span class="s">&#34;os&#34;</span>
-
-	<span class="nx">terralib</span> <span class="s">&#34;github.com/amongil/terralib&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Init terralib. ConfigPath is the path on where the Terraform config files are
-</span><span class="c1"></span>	<span class="nx">tf</span> <span class="o">:=</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">Terralib</span><span class="p">{</span>
-		<span class="nx">ConfigPath</span><span class="p">:</span> <span class="s">&#34;terraform-files&#34;</span><span class="p">,</span>
-    <span class="p">}</span>
-    
-    <span class="c1">// Terraform init
-</span><span class="c1"></span>	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform init...&#34;</span><span class="p">)</span>
-	<span class="nx">options</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
-	<span class="nx">initOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Init</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="k">defer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">initOutput</span><span class="p">.</span><span class="nx">Raw</span><span class="p">)</span>
-		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform init: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-		<span class="c1">// We can act on specific errors and maybe remediate
-</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">==</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">ErrProviderNotFound</span> <span class="p">{</span>
-			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Full error: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">terralib</span><span class="p">.</span><span class="nx">InitError</span><span class="p">).</span><span class="nx">Reason</span><span class="p">)</span>
-		<span class="p">}</span>
-		<span class="k">return</span>
-    <span class="p">}</span>
-    
-    <span class="c1">// Terraform plan
-</span><span class="c1"></span>	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform plan...&#34;</span><span class="p">)</span>
-	<span class="nx">planOptions</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
-		<span class="s">&#34;-out=planfile&#34;</span><span class="p">,</span>
-	<span class="p">}</span>
-	<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Plan</span><span class="p">(</span><span class="nx">planOptions</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform plan: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">==</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">ErrInvalidResourceType</span> <span class="p">{</span>
-			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Full error: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">terralib</span><span class="p">.</span><span class="nx">PlanError</span><span class="p">).</span><span class="nx">Reason</span><span class="p">)</span>
-		<span class="p">}</span>
-		<span class="k">return</span>
-    <span class="p">}</span>
-    
-    <span class="c1">// Issue Terraform Show command on the plan file and save info on memory
-</span><span class="c1"></span>	<span class="nx">dir</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getwd</span><span class="p">()</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">showOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="s">&#34;/terraform-files/planfile&#34;</span><span class="p">)</span>
-	<span class="c1">// Having our planned resource changes in a map allows us to make decisions over them
-</span><span class="c1"></span>	<span class="c1">// maybe even send them to event hubs for posterior analysis?
-</span><span class="c1"></span>	<span class="nx">plannedValues</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">showOutput</span><span class="p">.</span><span class="nx">PlannedValues</span><span class="p">).(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span>
-	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">plannedValues</span> <span class="p">{</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s: %v\n&#34;</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">.(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})[</span><span class="s">&#34;resources&#34;</span><span class="p">])</span>
-	<span class="p">}</span>
-
-    <span class="c1">// Terraform apply
-</span><span class="c1"></span>	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform apply...&#34;</span><span class="p">)</span>
-	<span class="nx">applyOptions</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
-		<span class="s">&#34;-auto-approve&#34;</span><span class="p">,</span>
-	<span class="p">}</span>
-	<span class="nx">applyOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Apply</span><span class="p">(</span><span class="nx">applyOptions</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform apply: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-		<span class="k">return</span>
-	<span class="p">}</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">applyOutput</span><span class="p">)</span>
-
-<span class="p">}</span></code></pre></div>
-<p>See how a complete Terraform workflow can be executed within your Go program. It needs more tests, error handling and deduplication of code, but it already serves a purpose. Hope you enjoy the idea and you start contributing to it. Don&rsquo;t hesitate to get in touch via GitHub.</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>Developing a Github Action in Go</title>
-			<link>https://alvaromongil.com/posts/developing-a-github-action-in-go/</link>
-			<pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
-			
-			<guid>https://alvaromongil.com/posts/developing-a-github-action-in-go/</guid>
-			<description>I&amp;rsquo;ve taken part in this month&amp;rsquo;s GitHub Hackathon. This time it consisted of creating a GitHub Action and publishing it on the Marketplace.
-Browsing through the marketplace, I did not see any connector to Azure Queues or Azure Event Hub, so I decided to write an action in Go that would send the last job status of the GitHub Workflow (failure, success, etc&amp;hellip;), along with some Git metadata, to an Azure Queue, for further processing through any consumer application that would read from that Azure Queue.</description>
-			<content type="html"><![CDATA[<p><img src="https://avatars0.githubusercontent.com/u/44036562?s=200&amp;v=4" alt="GitHub actions logo" /></p>
-
-<p>I&rsquo;ve taken part in this month&rsquo;s GitHub Hackathon. This time it consisted of creating a <a href="https://github.com/features/actions">GitHub Action</a> and publishing it on the Marketplace.</p>
-
-<p>Browsing through the marketplace, I did not see any connector to Azure Queues or Azure Event Hub, so I decided to write an action in Go that would send the last job status of the GitHub Workflow (failure, success, etc&hellip;), along with some Git metadata, to an Azure Queue, for further processing through any consumer application that would read from that Azure Queue.</p>
-
-<p>I can say that writing an Action is as simple as using them in your Workflows, and the Marketplace is a really good idea with quality Actions, as both the community and the vendors such as Microsoft or Amazon Web Services are publishing pug-and-play open-sourced Actions to integrate with their systems easily.</p>
-
-<p>You can check my Action code repository <a href="https://github.com/amongil/gh-action-push-workflow-last-job-status-to-azure-queue">here</a> and the published Action itself <a href="https://github.com/marketplace/actions/send-job-status-to-azure-queue">here on the Marketplace</a>.</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>Infrastructure development with the AWS CDK</title>
-			<link>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</link>
-			<pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
-			
-			<guid>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</guid>
-			<description>Amazon Web Services has recently released the Cloud Development Kit. It seemed like the idea was to expose AWS resources through a TypeScript API so that you could share your CloudFormation templates through NPM libraries, making it easier to share your work and to deploy your infrastructure. Within a few examples, I was hooked. You can follow part of my journey in the codelab workshop I created at https://aws-cdk-workshop.alvaromongil.com/#0.</description>
-			<content type="html"><![CDATA[<p><img src="https://cdkworkshop.com/images/new-cdk-logo.png" alt="img" /></p>
-
-<p>Amazon Web Services has recently released the Cloud Development Kit. It seemed like the idea was to expose AWS resources through a TypeScript API so that you could share your CloudFormation templates through NPM libraries, making it easier to share your work and to deploy your infrastructure. Within a few examples, I was hooked. You can follow part of my journey in the codelab workshop I created at <a href="https://aws-cdk-workshop.alvaromongil.com/#0">https://aws-cdk-workshop.alvaromongil.com/#0</a>.</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>I&#39;m joining the Storj network</title>
-			<link>https://alvaromongil.com/posts/im-joining-the-storj-network/</link>
-			<pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
-			
-			<guid>https://alvaromongil.com/posts/im-joining-the-storj-network/</guid>
-			<description>Lately, I have not been giving much attention to my Raspberry Pi 3 B+ and I remembered that a few months back I had received an invitation to the Storj network. Luckily, I have a spare 1TB external HDD that I can now hopefully put to good use.
- Storj is an S3-compatible platform and suite of decentralized applications that allows you to store data in a secure and decentralized manner.</description>
-			<content type="html"><![CDATA[
-
-<p><img src="https://storj.io//press-kit/Storj_io-logo-white.svg" alt="img" /></p>
-
-<p>Lately, I have not been giving much attention to my <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry Pi 3 B+</a> and I remembered that a few months back I had received an invitation to the <a href="https://storj.io/">Storj network</a>. Luckily, I have a spare <a href="https://www.amazon.com/Seagate-Portable-External-Hard-Drive/dp/B07CRG7BBH/ref=sr_1_3?keywords=STGX1000400&amp;qid=1565514627&amp;s=gateway&amp;sr=8-3">1TB external HDD</a> that I can now hopefully put to good use.</p>
-
-<blockquote>
-<h2 id="storj-is-an-s3-compatible-platform-and-suite-of-decentralized-applications-that-allows-you-to-store-data-in-a-secure-and-decentralized-manner-1">Storj is an S3-compatible platform and suite of decentralized applications that allows you to store data in a secure and decentralized manner.<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></h2>
-</blockquote>
-
-<h1 id="node-installation">Node installation</h1>
-
-<p>After restoring my Pi to factory defaults and enabling SSH to connect and run the necessary installation commands from my Macbook, it is time to start with the prerequisites: mounting the external hard drive, installing docker and setting up port-forwarding.</p>
-
-<h2 id="prerequisites">Prerequisites</h2>
-
-<h3 id="mounting-the-external-hard-drive">Mounting the external hard drive</h3>
-
-<p>My HDD came formatted as NTFS and with a bunch of vendor files that I want to get rid of and reformat as <em>ext4</em>.</p>
-
-<p>For that, I make use of the <em>fdisk</em> utility to create the partitions of type <em>Linux</em>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">pi@raspberrypi:~ sudo fdisk /dev/sda
-
-Welcome to fdisk <span class="o">(</span>util-linux <span class="m">2</span>.29.2<span class="o">)</span>.
-Changes will remain in memory only, <span class="k">until</span> you decide to write them.
-Be careful before using the write command.
-
-
-Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: p
-Disk /dev/sda: <span class="m">931</span>,5 GiB, <span class="m">1000204885504</span> bytes, <span class="m">1953525167</span> sectors
-Units: sectors of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
-Sector size <span class="o">(</span>logical/physical<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
-I/O size <span class="o">(</span>minimum/optimal<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
-Disklabel type: dos
-Disk identifier: 0xe35c7600
-
-Device     Boot Start        End    Sectors   Size Id Type
-/dev/sda1  *       <span class="m">64</span> <span class="m">1953520128</span> <span class="m">1953520065</span> <span class="m">931</span>,5G  <span class="m">7</span> HPFS/NTFS/exFAT
-
-Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: d
-Selected partition <span class="m">1</span>
-Partition <span class="m">1</span> has been deleted.
-
-Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: p
-Disk /dev/sda: <span class="m">931</span>,5 GiB, <span class="m">1000204885504</span> bytes, <span class="m">1953525167</span> sectors
-Units: sectors of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
-Sector size <span class="o">(</span>logical/physical<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
-I/O size <span class="o">(</span>minimum/optimal<span class="o">)</span>: <span class="m">512</span> bytes / <span class="m">512</span> bytes
-Disklabel type: dos
-Disk identifier: 0xe35c7600
-
-Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: n
-Partition <span class="nb">type</span>
-   p   primary <span class="o">(</span><span class="m">0</span> primary, <span class="m">0</span> extended, <span class="m">4</span> free<span class="o">)</span>
-   e   extended <span class="o">(</span>container <span class="k">for</span> logical partitions<span class="o">)</span>
-Select <span class="o">(</span>default p<span class="o">)</span>: p
-Partition number <span class="o">(</span><span class="m">1</span>-4, default <span class="m">1</span><span class="o">)</span>: <span class="m">1</span>
-First sector <span class="o">(</span><span class="m">2048</span>-1953525166, default <span class="m">2048</span><span class="o">)</span>:
-Last sector, +sectors or +size<span class="o">{</span>K,M,G,T,P<span class="o">}</span> <span class="o">(</span><span class="m">2048</span>-1953525166, default <span class="m">1953525166</span><span class="o">)</span>:
-
-Created a new partition <span class="m">1</span> of <span class="nb">type</span> <span class="s1">&#39;Linux&#39;</span> and of size <span class="m">931</span>,5 GiB.</code></pre></div>
-<p>And then formatting the partition as <em>ext4</em>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">pi@raspberrypi:~ $ sudo mkfs.ext4 /dev/sda1 -L storjspace01
-mke2fs <span class="m">1</span>.43.4 <span class="o">(</span><span class="m">31</span>-Jan-2017<span class="o">)</span>
-Se está creando un sistema de ficheros con <span class="m">244190389</span> bloques de 4k y <span class="m">61054976</span> nodos-i
-UUID del sistema de ficheros: 8cf9d53a-7ec4-4a7b-a5b0-ad5ac7d272b8
-Respaldo del superbloque guardado en los bloques:
-	<span class="m">32768</span>, <span class="m">98304</span>, <span class="m">163840</span>, <span class="m">229376</span>, <span class="m">294912</span>, <span class="m">819200</span>, <span class="m">884736</span>, <span class="m">1605632</span>, <span class="m">2654208</span>,
-	<span class="m">4096000</span>, <span class="m">7962624</span>, <span class="m">11239424</span>, <span class="m">20480000</span>, <span class="m">23887872</span>, <span class="m">71663616</span>, <span class="m">78675968</span>,
-	<span class="m">102400000</span>, <span class="m">214990848</span>
-
-Reservando las tablas de grupo: hecho
-Escribiendo las tablas de nodos-i: hecho
-Creando el fichero de transacciones <span class="o">(</span><span class="m">262144</span> bloques<span class="o">)</span>: hecho
-Escribiendo superbloques y la información contable del sistema de ficheros: hecho</code></pre></div>
-<p>Now we can mount it:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">pi@raspberrypi:~ $ sudo mkdir /mnt/storjspace01
-sudo mkdir /storjspace01
-
-pi@raspberrypi:~ $ sudo mount /dev/sda1 /mnt/storjspace01
-sudo mount /dev/sda1 /storjspace01
-pi@raspberrypi:~ $ df -h
-S.ficheros     Tamaño Usados  Disp Uso% Montado en
-/dev/root         28G   <span class="m">4</span>,0G   23G  <span class="m">15</span>% /
-devtmpfs         459M      <span class="m">0</span>  459M   <span class="m">0</span>% /dev
-tmpfs            464M      <span class="m">0</span>  464M   <span class="m">0</span>% /dev/shm
-tmpfs            464M    13M  451M   <span class="m">3</span>% /run
-tmpfs            <span class="m">5</span>,0M   <span class="m">4</span>,0K  <span class="m">5</span>,0M   <span class="m">1</span>% /run/lock
-tmpfs            464M      <span class="m">0</span>  464M   <span class="m">0</span>% /sys/fs/cgroup
-/dev/mmcblk0p6    71M    23M   49M  <span class="m">32</span>% /boot
-tmpfs             93M      <span class="m">0</span>   93M   <span class="m">0</span>% /run/user/1000
-/dev/mmcblk0p5    30M   398K   28M   <span class="m">2</span>% /media/pi/SETTINGS
-/dev/sda1        916G    77M  870G   <span class="m">1</span>% /mnt/storjspace01</code></pre></div>
-<p>Let&rsquo;s now modify the <em>fstab</em> file to define the location where the storage device will be automatically mounted when the Raspberry Pi starts up, to persist the configuration across reboots. I have to add the following line to the <em>/etc/fstab</em> file:</p>
-
-<pre><code>/dev/sda1 /mnt/storjspace01 ext4 defaults 0 0
-</code></pre>
-
-<h3 id="installing-docker">Installing Docker</h3>
-
-<p>I will make use of the official Docker installation script:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -fsSL https://get.docker.com -o get-docker.sh</code></pre></div>
-<p>Once downloaded, run it:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ sh get-docker.sh</code></pre></div>
-<h3 id="setting-up-port-forwarding">Setting up port forwarding</h3>
-
-<p>Here I have to go to my router settings and set up port forwarding for port 28967 for the local ip of the Raspberry Pi on my LAN.</p>
-
-<h2 id="setup">Setup</h2>
-
-<h3 id="create-an-identity">Create an identity</h3>
-
-<p>This is supposed to take a good bit of computing power so I will create this identity on my Macbook, sign it and then transfer it to my Raspberry Pi.</p>
-
-<p>After downloading the binary for macOS:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">./identity_darwin_amd64 create storagenode</code></pre></div>
-<p>This will create an identity that I will sign with the token that I have received via email back when I signed up for the alpha:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">./identity_darwin_amd64 authorize storagenode <span class="nv">$MYTOKEN</span></code></pre></div>
-<blockquote>
-<p>Make sure to back up this file as it uniquely identifies you within the network</p>
-</blockquote>
-
-<p>Now let&rsquo;s transfer it to the Pi:</p>
-
-<pre><code>$ scp -r ~/Library/Application\ Support/Storj/Identity/storagenode/ pi@192.168.1.42:/home/pi/.local/share/storj/identity/storagenode/
-pi@192.168.1.42's password:
-ca.1565521730.cert                                                                                                                                                        100%  546   103.2KB/s   00:00
-ca.cert                                                                                                                                                                   100% 1076   170.0KB/s   00:00
-identity.cert                                                                                                                                                             100% 1618    12.4KB/s   00:00
-identity.key                                                                                                                                                              100%  241    43.4KB/s   00:00
-identity.1565521730.cert                                                                                                                                                  100% 1088   170.1KB/s   00:00
-ca.key
-</code></pre>
-
-<h3 id="download-and-run-the-storagenode-container">Download and run the storagenode container</h3>
-
-<p>On the Pi SSH session:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">docker pull storjlabs/storagenode:arm</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">docker run -d --restart unless-stopped -p <span class="m">28967</span>:28967 <span class="se">\
-</span><span class="se"></span>    -e <span class="nv">WALLET</span><span class="o">=</span><span class="s2">&#34;0xxxxxxxxxx&#34;</span> <span class="se">\
-</span><span class="se"></span>    -e <span class="nv">ADDRESS</span><span class="o">=</span><span class="s2">&#34;myaddress:28967&#34;</span> <span class="se">\
-</span><span class="se"></span>    -e <span class="nv">BANDWIDTH</span><span class="o">=</span><span class="s2">&#34;2TB&#34;</span> <span class="se">\
-</span><span class="se"></span>    -e <span class="nv">STORAGE</span><span class="o">=</span><span class="s2">&#34;800GB&#34;</span> <span class="se">\
-</span><span class="se"></span>    --mount <span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span><span class="s2">&#34;/home/pi/.local/share/storj/identity/storagenode&#34;</span>,destination<span class="o">=</span>/app/identity <span class="se">\
-</span><span class="se"></span>    --mount <span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span><span class="s2">&#34;/mnt/storjspace01&#34;</span>,destination<span class="o">=</span>/app/config <span class="se">\
-</span><span class="se"></span>    --name storagenode storjlabs/storagenode:arm</code></pre></div>
-<p>OK, let&rsquo;s take a look at the logs and see if everything is alright:</p>
-
-<pre><code>$ docker logs  storagenode
-2019-08-11T11:57:06.494Z	INFO	Node started
-2019-08-11T11:57:06.495Z	INFO	Public server started on [::]:28967
-2019-08-11T11:57:06.495Z	INFO	Private server started on 127.0.0.1:7778
-2019-08-11T11:57:06.496Z	INFO	vouchers	Checking vouchers
-2019-08-11T11:57:06.500Z	INFO	piecestore:monitor	Remaining Bandwidth	{&quot;bytes&quot;: 2000000000000}
-2019-08-11T11:57:06.501Z	INFO	bandwidth	Performing bandwidth usage rollups
-2019-08-11T11:57:06.502Z	INFO	vouchers	Requesting voucher	{&quot;satellite&quot;: &quot;12EayRS2V1kEsWESU9QMRseFhdxYxKicsiFmxrsLZHeLUtdps3S&quot;}
-2019-08-11T11:57:06.503Z	INFO	vouchers	Requesting voucher	{&quot;satellite&quot;: &quot;118UWpMCHzs6CvSgWd9BfFVjw5K9pZbJjkfZJexMtSkmKxvvAW&quot;}
-2019-08-11T11:57:06.506Z	INFO	vouchers	Requesting voucher	{&quot;satellite&quot;: &quot;121RTSDpyNZVcEU84Ticf2L1ntiuUimbWgfATz21tuvgk3vzoA6&quot;}
-2019-08-11T11:57:06.508Z	INFO	vouchers	Requesting voucher	{&quot;satellite&quot;: &quot;12L9ZFwhzVpuEKMUNUqkaTLGzwY9G24tbiigLiXpmZWKwmcNDDs&quot;}
-2019-08-11T11:57:06.621Z	INFO	running on version v0.16.1
-2019-08-11T11:57:06.964Z	INFO	vouchers	Voucher request denied. Vetting process not yet complete
-2019-08-11T11:57:07.125Z	INFO	vouchers	Voucher request denied. Vetting process not yet complete
-2019-08-11T11:57:07.396Z	INFO	vouchers	Voucher request denied. Vetting process not yet complete
-2019-08-11T11:57:08.018Z	INFO	vouchers	Voucher request denied. Vetting process not yet complete
-</code></pre>
-
-<p>As we can see from the logs, the node is attempting to join the network. But there is something called <em>vetting process</em> which is preventing it from.</p>
-
-<blockquote>
-<p>By default, storage nodes will accept requests to store data from all Satellites on the network. When a new Satellite comes online and makes the first request to a storage node, there will be a vetting process to limit exposure and build trust. Storage nodes can indicate the maximum amount of data they will store for untrusted Satellites. This is a two-way street. When a new storage node comes online, the Satellite vets the new storage node as well to ensure it can reliability store data. Over time, the storage node will build up its reputation with the Satellite and will be allowed to store more data. <sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup></p>
-</blockquote>
-
-<hr />
-
-<h1 id="conclussions">Conclussions</h1>
-
-<p>Preparing your Raspberry Pi and your HDD to work with the Storj network is a pretty straight-forward job. Storj is gaining some traction and now is offering an Enterprise version of the network called <a href="https://tardigrade.io/">Tardigrade</a>. I imagine as Storj takes off more and more powerful nodes will join the network and it might even be the case now that my poor Raspberry Pi is no competition to most of the nodes. Anyways, the process was fun and my hopes are still up. Hope you enjoyed following the process alongside me. Until next time!</p>
-
-<p>Update: it has successfully joined the network and I can see movement on the dashboard. Now time to tweak settings :)</p>
-
-<pre><code>Storage Node Dashboard ( Node Version: v0.16.1 )
-
-======================
-
-ID           xxxxxxxxxxx
-Last Contact 0s ago
-Uptime       15m53s
-
-                   Available         Used      Egress      Ingress
-     Bandwidth        2.0 TB     188.3 MB     14.9 MB     173.4 MB (since Aug 1)
-          Disk        0.8 TB     113.0 MB
-
-Bootstrap bootstrap.storj.io:8888
-Internal  127.0.0.1:7778
-External  x.x.x.x:28967
-
-Neighborhood Size 151
-</code></pre>
-<div class="footnotes">
-
-<hr />
-
-<ol>
-<li id="fn:1">From <a href="https://documentation.storj.io">https://documentation.storj.io</a>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-<li id="fn:2">From <a href="https://storj.io/blog/2019/04/what-storage-node-operators-need-to-know-about-satellites/">https://storj.io/blog/2019/04/what-storage-node-operators-need-to-know-about-satellites/</a>
- <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
-</ol>
-</div>
-]]></content>
-		</item>
-		
-	</channel>
+  <channel>
+    <title>Posts on Álvaro Mongil</title>
+    <link>https://alvaromongil.com/posts/</link>
+    <description>Recent content in Posts on Álvaro Mongil</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
+    <atom:link href="https://alvaromongil.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Terralib: Run Terraform commands in your Go code</title>
+      <link>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      <guid>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://avatars0.githubusercontent.com/u/28900900?s=460&amp;amp;v=4&#34; alt=&#34;Terraform logo&#34;&gt;&#xA;&lt;img src=&#34;https://blog.golang.org/gopher/header.jpg&#34; alt=&#34;Gopher&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;When developing automated infrastructure tests, I&amp;rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).&lt;/p&gt;&#xA;&lt;p&gt;Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a &lt;a href=&#34;https://github.com/amongil/terralib&#34;&gt;working alpha of my Terralib project&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Developing a Github Action in Go</title>
+      <link>https://alvaromongil.com/posts/developing-a-github-action-in-go/</link>
+      <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
+      <guid>https://alvaromongil.com/posts/developing-a-github-action-in-go/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://avatars0.githubusercontent.com/u/44036562?s=200&amp;amp;v=4&#34; alt=&#34;GitHub actions logo&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve taken part in this month&amp;rsquo;s GitHub Hackathon. This time it consisted of creating a &lt;a href=&#34;https://github.com/features/actions&#34;&gt;GitHub Action&lt;/a&gt; and publishing it on the Marketplace.&lt;/p&gt;&#xA;&lt;p&gt;Browsing through the marketplace, I did not see any connector to Azure Queues or Azure Event Hub, so I decided to write an action in Go that would send the last job status of the GitHub Workflow (failure, success, etc&amp;hellip;), along with some Git metadata, to an Azure Queue, for further processing through any consumer application that would read from that Azure Queue.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Infrastructure development with the AWS CDK</title>
+      <link>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</link>
+      <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
+      <guid>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://cdkworkshop.com/images/new-cdk-logo.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Amazon Web Services has recently released the Cloud Development Kit. It seemed like the idea was to expose AWS resources through a TypeScript API so that you could share your CloudFormation templates through NPM libraries, making it easier to share your work and to deploy your infrastructure. Within a few examples, I was hooked. You can follow part of my journey in the codelab workshop I created at &lt;a href=&#34;https://aws-cdk-workshop.alvaromongil.com/#0&#34;&gt;https://aws-cdk-workshop.alvaromongil.com/#0&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I&#39;m joining the Storj network</title>
+      <link>https://alvaromongil.com/posts/im-joining-the-storj-network/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
+      <guid>https://alvaromongil.com/posts/im-joining-the-storj-network/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://storj.io//press-kit/Storj_io-logo-white.svg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Lately, I have not been giving much attention to my &lt;a href=&#34;https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/&#34;&gt;Raspberry Pi 3 B+&lt;/a&gt; and I remembered that a few months back I had received an invitation to the &lt;a href=&#34;https://storj.io/&#34;&gt;Storj network&lt;/a&gt;. Luckily, I have a spare &lt;a href=&#34;https://www.amazon.com/Seagate-Portable-External-Hard-Drive/dp/B07CRG7BBH/ref=sr_1_3?keywords=STGX1000400&amp;amp;qid=1565514627&amp;amp;s=gateway&amp;amp;sr=8-3&#34;&gt;1TB external HDD&lt;/a&gt; that I can now hopefully put to good use.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Storj is an S3-compatible platform and suite of decentralized applications that allows you to store data in a secure and decentralized manner.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;h1 id=&#34;node-installation&#34;&gt;Node installation&lt;a href=&#34;#node-installation&#34; class=&#34;anchor&#34; aria-hidden=&#34;true&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 24 24&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;2&#34;&#xA;      stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34;&gt;&#xA;      &lt;path d=&#34;M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3&#34;&gt;&lt;/path&gt;&#xA;      &lt;line x1=&#34;8&#34; y1=&#34;12&#34; x2=&#34;16&#34; y2=&#34;12&#34;&gt;&lt;/line&gt;&#xA;   &lt;/svg&gt;&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;After restoring my Pi to factory defaults and enabling SSH to connect and run the necessary installation commands from my Macbook, it is time to start with the prerequisites: mounting the external hard drive, installing docker and setting up port-forwarding.&lt;/p&gt;</description>
+    </item>
+  </channel>
 </rss>
