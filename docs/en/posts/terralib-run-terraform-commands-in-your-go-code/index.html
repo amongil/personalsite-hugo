@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="robots" content="index, follow"><meta name="author" content="Alvaro Mongil">
+<meta name="description" content="">
+<link rel="author" type="text/plain" href="/humans.txt">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" href="/favicon.ico" type="image/x-icon"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#494f5c">
+<meta name="msapplication-TileColor" content="#494f5c">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#494f5c">
+
+  <meta itemprop="name" content="Terralib: Run Terraform commands in your Go code">
+  <meta itemprop="description" content="When developing automated infrastructure tests, I’ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).
+Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.
+That’s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a working alpha of my Terralib project.">
+  <meta itemprop="datePublished" content="2020-04-16T12:13:07+02:00">
+  <meta itemprop="dateModified" content="2020-04-16T12:13:07+02:00">
+  <meta itemprop="wordCount" content="376">
+  <meta itemprop="keywords" content="Terraform,Go,Library"><meta property="og:url" content="https://alvaromongil.com/en/posts/terralib-run-terraform-commands-in-your-go-code/">
+  <meta property="og:site_name" content="Álvaro Mongil">
+  <meta property="og:title" content="Terralib: Run Terraform commands in your Go code">
+  <meta property="og:description" content="When developing automated infrastructure tests, I’ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).
+Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.
+That’s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a working alpha of my Terralib project.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-04-16T12:13:07+02:00">
+    <meta property="article:modified_time" content="2020-04-16T12:13:07+02:00">
+    <meta property="article:tag" content="Terraform">
+    <meta property="article:tag" content="Go">
+    <meta property="article:tag" content="Library">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Terralib: Run Terraform commands in your Go code">
+  <meta name="twitter:description" content="When developing automated infrastructure tests, I’ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).
+Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.
+That’s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a working alpha of my Terralib project.">
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Terralib: Run Terraform commands in your Go code",
+    "name": "Terralib: Run Terraform commands in your Go code",
+    "description": " When developing automated infrastructure tests, I\u0026rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).\nTerraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.\nThat\u0026rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a working alpha of my Terralib project.\n",
+    "keywords": ["terraform", "go", "library"],
+    "articleBody": " When developing automated infrastructure tests, I’ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).\nTerraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.\nThat’s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a working alpha of my Terralib project.\nExample of usage:\npackage main import ( \"fmt\" \"log\" \"os\" terralib \"github.com/amongil/terralib\" ) func main() { // Init terralib. ConfigPath is the path on where the Terraform config files are tf := terralib.Terralib{ ConfigPath: \"terraform-files\", } // Terraform init log.Println(\"Running terraform init...\") options := []string{} initOutput, err := tf.Init(options) if err != nil { defer fmt.Println(initOutput.Raw) log.Printf(\"Error on terraform init: %s\\n\", err) // We can act on specific errors and maybe remediate if err.Error() == terralib.ErrProviderNotFound { log.Printf(\"Full error: %s\\n\", err.(terralib.InitError).Reason) } return } // Terraform plan log.Println(\"Running terraform plan...\") planOptions := []string{ \"-out=planfile\", } _, err = tf.Plan(planOptions) if err != nil { log.Printf(\"Error on terraform plan: %s\\n\", err) if err.Error() == terralib.ErrInvalidResourceType { log.Printf(\"Full error: %s\\n\", err.(terralib.PlanError).Reason) } return } // Issue Terraform Show command on the plan file and save info on memory dir, err := os.Getwd() if err != nil { log.Fatal(err) } showOutput, err := tf.Show(dir + \"/terraform-files/planfile\") // Having our planned resource changes in a map allows us to make decisions over them // maybe even send them to event hubs for posterior analysis? plannedValues := (showOutput.PlannedValues).(map[string]interface{}) for k, v := range plannedValues { fmt.Printf(\"%s: %v\\n\", k, v.(map[string]interface{})[\"resources\"]) } // Terraform apply log.Println(\"Running terraform apply...\") applyOptions := []string{ \"-auto-approve\", } applyOutput, err := tf.Apply(applyOptions) if err != nil { log.Printf(\"Error on terraform apply: %s\\n\", err) return } fmt.Println(applyOutput) } See how a complete Terraform workflow can be executed within your Go program. It needs more tests, error handling and deduplication of code, but it already serves a purpose. Hope you enjoy the idea and you start contributing to it. Don’t hesitate to get in touch via GitHub.\n",
+    "wordCount" : "376",
+    "inLanguage": "en",
+    "datePublished": "2020-04-16T12:13:07+02:00",
+    "dateModified": "2020-04-16T12:13:07+02:00",
+    "author":{
+        "@type": "Person",
+        "name": "Alvaro Mongil",
+        "url": "https://alvaromongil.com/en/about/"
+        },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://alvaromongil.com/en/posts/terralib-run-terraform-commands-in-your-go-code/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Álvaro Mongil",
+      "description": "",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://alvaromongil.com/favicon.ico"
+      }
+    }
+}
+</script><title>Terralib: Run Terraform commands in your Go code</title>
+<link rel="stylesheet dns-prefetch preconnect preload prefetch" as="style" media="screen" href="https://alvaromongil.com/css/style.min.79f5321746ef35da811f1eca23ddd5ec79443b5791c00351fdf10459a0d51bb5.css" integrity="sha256-efUyF0bvNdqBHx7KI93V7HlEO1eRwANR/fEEWaDVG7U=" crossorigin="anonymous">
+	</head>
+<body id="page">
+	<header id="site-header">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://alvaromongil.com/">Álvaro Mongil</a>
+				</div>
+				<nav class="site-nav hide-in-mobile"><a href="https://alvaromongil.com/en/posts/">Posts</a><a href="https://alvaromongil.com/en/about/">About</a></nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-links hide-in-mobile"><a href="mailto:hello@alvaromongil.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none"
+   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+   <polyline points="22,6 12,13 2,6"></polyline>
+</svg></a><a href="https://github.com/amongil" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none"
+   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+   <path
+      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+   </path>
+</svg></a><a href="https://linkedin.com/in/alvaro-mongil" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none"
+   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+   <rect x="2" y="9" width="4" height="12"></rect>
+   <circle cx="4" cy="4" r="2"></circle>
+</svg></a></span><button id="menu-btn" class="hdr-btn" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+   </svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://alvaromongil.com/en/posts/">Posts</a></li>
+			<li><a href="https://alvaromongil.com/en/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster"><article class="thin">
+			<header class="post-header">
+				<div class="post-date"><span>Apr 16, 2020</span></div>
+				<h1>Terralib: Run Terraform commands in your Go code</h1>
+			</header>
+			<div class="post-description"><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather">
+   <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+   <line x1="16" y1="8" x2="2" y2="22"></line>
+   <line x1="17.5" y1="15" x2="9" y2="15"></line>
+</svg><a href="https://alvaromongil.com/en/about/" target="_blank">Alvaro Mongil</a></p>
+<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon">
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+      <line x1="7" y1="7" x2="7" y2="7"></line>
+   </svg><span class="tag"><a href="https://alvaromongil.com/en/tags/terraform">terraform</a></span><span class="tag"><a href="https://alvaromongil.com/en/tags/go">go</a></span><span class="tag"><a href="https://alvaromongil.com/en/tags/library">library</a></span></p>
+<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+      <line x1="16" y1="13" x2="8" y2="13"></line>
+      <line x1="16" y1="17" x2="8" y2="17"></line>
+      <polyline points="10 9 9 9 8 9"></polyline>
+   </svg>376&nbspWords - 1 Minute, 42 Seconds</p>
+<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+   </svg>2020-04-16 12:13 &#43;0200
+</p></div>
+			<hr class="post-end">
+			<div class="content">
+				 <p><img src="https://avatars0.githubusercontent.com/u/28900900?s=460&amp;v=4" alt="Terraform logo">
+<img src="https://blog.golang.org/gopher/header.jpg" alt="Gopher"></p>
+<p>When developing automated infrastructure tests, I&rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).</p>
+<p>Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.</p>
+<p>That&rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a <a href="https://github.com/amongil/terralib">working alpha of my Terralib project</a>.</p>
+<p>Example of usage:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">terralib</span> <span class="s">&#34;github.com/amongil/terralib&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Init terralib. ConfigPath is the path on where the Terraform config files are</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">tf</span> <span class="o">:=</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">Terralib</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ConfigPath</span><span class="p">:</span> <span class="s">&#34;terraform-files&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// Terraform init</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform init...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">options</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">initOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Init</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">defer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">initOutput</span><span class="p">.</span><span class="nx">Raw</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform init: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// We can act on specific errors and maybe remediate</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">==</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">ErrProviderNotFound</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Full error: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">terralib</span><span class="p">.</span><span class="nx">InitError</span><span class="p">).</span><span class="nx">Reason</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// Terraform plan</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform plan...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">planOptions</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;-out=planfile&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Plan</span><span class="p">(</span><span class="nx">planOptions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform plan: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">==</span> <span class="nx">terralib</span><span class="p">.</span><span class="nx">ErrInvalidResourceType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Full error: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">terralib</span><span class="p">.</span><span class="nx">PlanError</span><span class="p">).</span><span class="nx">Reason</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// Issue Terraform Show command on the plan file and save info on memory</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">dir</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getwd</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">showOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="s">&#34;/terraform-files/planfile&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Having our planned resource changes in a map allows us to make decisions over them</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// maybe even send them to event hubs for posterior analysis?</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">plannedValues</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">showOutput</span><span class="p">.</span><span class="nx">PlannedValues</span><span class="p">).(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">plannedValues</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s: %v\n&#34;</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">.(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{})[</span><span class="s">&#34;resources&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Terraform apply</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Running terraform apply...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">applyOptions</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;-auto-approve&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">applyOutput</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tf</span><span class="p">.</span><span class="nf">Apply</span><span class="p">(</span><span class="nx">applyOptions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error on terraform apply: %s\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">applyOutput</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>See how a complete Terraform workflow can be executed within your Go program. It needs more tests, error handling and deduplication of code, but it already serves a purpose. Hope you enjoy the idea and you start contributing to it. Don&rsquo;t hesitate to get in touch via GitHub.</p>
+
+			</div>
+			
+
+<div class="related-posts thin">
+	<h2>See Also</h2>
+	<ul>
+	
+	<li><a href="/en/posts/developing-a-github-action-in-go/">Developing a Github Action in Go</a></li>
+	
+	</ul>
+</div>
+
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://alvaromongil.com/en/posts/developing-a-github-action-in-go/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+   </svg></span><br><span>Developing a Github Action in Go</span>
+			</a>
+		</div>
+		<div id="comments" class="thin"></div>
+	</main>
+<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+<p>
+	&copy; 2025 <a href="https://alvaromongil.com/">Álvaro Mongil</a>
+	&#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0 </a>&#183; Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>
+	&#183; Theme <a href="https://github.com/1bl4z3r/hermit-V2" target="_blank" rel="noopener">Hermit-V2</a></p></footer>
+<script async src="https://alvaromongil.com/js/bundle.min.c7c384e4d29d192bbac6811ae4660bb01767194a5bea56baca77e8260f93ea16.js" integrity="sha256-x8OE5NKdGSu6xoEa5GYLsBdnGUpb6la6ynfoJg+T6hY=" crossorigin="anonymous"></script>
+
+
+	
+  	<script defer src="/js/gallery.min.2ecc1b89d4341e7bbf04b2248466631f9b7e73500facb6de51f60247b392281b.js" integrity="sha256-LswbidQ0Hnu/BLIkhGZjH5t+c1APrLbeUfYCR7OSKBs=" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

@@ -1,71 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://alvaromongil.com/about/</loc>
-    <lastmod>2025-05-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/</loc>
-    <lastmod>2025-05-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/go/</loc>
-    <lastmod>2020-04-16T12:13:07+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/library/</loc>
-    <lastmod>2020-04-16T12:13:07+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/posts/</loc>
-    <lastmod>2020-04-16T12:13:07+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/</loc>
-    <lastmod>2020-04-16T12:13:07+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/terraform/</loc>
-    <lastmod>2020-04-16T12:13:07+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/posts/terralib-run-terraform-commands-in-your-go-code/</loc>
-    <lastmod>2020-04-16T12:13:07+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/azure/</loc>
-    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/posts/developing-a-github-action-in-go/</loc>
-    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/github/</loc>
-    <lastmod>2020-03-23T16:43:10+01:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/aws/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/cdk/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/iac/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/posts/infrastructure-development-with-the-aws-cdk/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/typescript/</loc>
-    <lastmod>2019-10-29T10:32:00+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/decentralized/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/ethereum/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/posts/im-joining-the-storj-network/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/raspberrypi/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/storage/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-  </url><url>
-    <loc>https://alvaromongil.com/tags/storj/</loc>
-    <lastmod>2019-08-11T11:33:59+02:00</lastmod>
-  </url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <sitemap>
+    <loc>https://alvaromongil.com/en/sitemap.xml</loc>
+    
+      <lastmod>2025-05-15T00:00:00+00:00</lastmod>
+    
+  </sitemap>
+  
+</sitemapindex>
