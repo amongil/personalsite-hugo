@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Terraform on Álvaro Mongil</title>
+    <link>http://localhost:1313/en/tags/terraform/</link>
+    <description>Recent content in Terraform on Álvaro Mongil</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>&amp;#183; &lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Terralib: Run Terraform commands in your Go code</title>
+      <link>http://localhost:1313/en/posts/terralib-run-terraform-commands-in-your-go-code/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      <guid>http://localhost:1313/en/posts/terralib-run-terraform-commands-in-your-go-code/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://avatars0.githubusercontent.com/u/28900900?s=460&amp;amp;v=4&#34; alt=&#34;Terraform logo&#34;&gt;&#xA;&lt;img src=&#34;https://blog.golang.org/gopher/header.jpg&#34; alt=&#34;Gopher&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;When developing automated infrastructure tests, I&amp;rsquo;ve often had to use Terraform to spin up an ephemeral cloud environment and then perform some tests on it, using the AWS or the Azure SDK (i.e. checking connectivity or next hops with Azure Network Watcher API calls).&lt;/p&gt;&#xA;&lt;p&gt;Terraform is only supported through a Command-Line-Interface, and I wanted to perform all operations in a single Go program.&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s the reason I started to dig into the Terraform code a create a library of my own so I could call Terraform CLI commands within my Go programs. I have just released a &lt;a href=&#34;https://github.com/amongil/terralib&#34;&gt;working alpha of my Terralib project&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

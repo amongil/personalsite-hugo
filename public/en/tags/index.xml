@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Álvaro Mongil</title>
+    <link>http://localhost:1313/en/tags/</link>
+    <description>Recent content in Tags on Álvaro Mongil</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>&amp;#183; &lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 16 Apr 2020 12:13:07 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go</title>
+      <link>http://localhost:1313/en/tags/go/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Library</title>
+      <link>http://localhost:1313/en/tags/library/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/library/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Terraform</title>
+      <link>http://localhost:1313/en/tags/terraform/</link>
+      <pubDate>Thu, 16 Apr 2020 12:13:07 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/terraform/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Azure</title>
+      <link>http://localhost:1313/en/tags/azure/</link>
+      <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
+      <guid>http://localhost:1313/en/tags/azure/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Github</title>
+      <link>http://localhost:1313/en/tags/github/</link>
+      <pubDate>Mon, 23 Mar 2020 16:43:10 +0100</pubDate>
+      <guid>http://localhost:1313/en/tags/github/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Aws</title>
+      <link>http://localhost:1313/en/tags/aws/</link>
+      <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/aws/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cdk</title>
+      <link>http://localhost:1313/en/tags/cdk/</link>
+      <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/cdk/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Iac</title>
+      <link>http://localhost:1313/en/tags/iac/</link>
+      <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/iac/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Typescript</title>
+      <link>http://localhost:1313/en/tags/typescript/</link>
+      <pubDate>Tue, 29 Oct 2019 10:32:00 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/typescript/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Decentralized</title>
+      <link>http://localhost:1313/en/tags/decentralized/</link>
+      <pubDate>Sun, 11 Aug 2019 11:33:59 +0200</pubDate>
+      <guid>http://localhost:1313/en/tags/decentralized/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
